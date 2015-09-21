@@ -1,0 +1,14 @@
+FROM ubuntu:14.04
+RUN apt-get update && \
+  apt-get -y install software-properties-common && \
+  apt-add-repository -y ppa:ansible/ansible && \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y git curl ansible && \
+  mkdir /opt/myAnsible && \
+  cd /opt/myAnsible
+COPY tree.yml /opt/myAnsible/tree.yml
+WORKDIR /opt/myAnsible
+RUN ansible-playbook tree.yml --connection=local 
+CMD ["/bin/bash"]
+
